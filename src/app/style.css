@@ -896,3 +896,95 @@ progress {
     margin-top: 10px;
   }
 }
+
+/* 认证照料与凭证 */
+.care-steps {
+  margin-top: 14px;
+  border-top: 1px dashed #e0e5d4;
+  padding-top: 12px;
+}
+.care-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 10px;
+  color: #5f7c50;
+}
+.care-head em {
+  font-style: normal;
+  font-size: 9px;
+  color: #a28b4d;
+}
+.care-step {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 0;
+  border-bottom: 1px solid #eff0e6;
+  font-size: 10px;
+}
+.care-step > span {
+  flex: 0 0 62px;
+}
+.care-step > small {
+  flex: 1;
+  font-size: 9px;
+  color: #99a38d;
+}
+.care-step > button {
+  font-size: 9px;
+  padding: 5px 8px;
+}
+.care-step.open > small {
+  color: #6f8e59;
+}
+.care-step.done {
+  opacity: 0.62;
+}
+.care-step.missed > small {
+  color: #b07b63;
+}
+.cert-tag {
+  display: block;
+  font-size: 9px;
+  margin-top: 3px;
+  color: #5f7c50;
+}
+.cert-tag.uncertified {
+  color: #a8946f;
+}
+.shortfall {
+  display: block;
+  font-size: 9px;
+  line-height: 1.7;
+  margin-top: 5px;
+  color: #b07b63;
+}
+.stock-report {
+  width: 100%;
+  border-top: 1px dashed #e7e9dc;
+  padding-top: 8px;
+  font-size: 9px;
+  line-height: 1.8;
+}
+.stock-report p {
+  margin: 4px 0;
+}
+.stock-report ul {
+  margin: 6px 0 0;
+  padding-left: 15px;
+  color: #8d9a80;
+}
+.contract-events {
+  margin-top: 12px;
+  font-size: 9px;
+  color: #8d9a80;
+}
+.contract-events summary {
+  cursor: pointer;
+  color: #6f8e59;
+}
+.contract-events p {
+  margin: 5px 0;
+  line-height: 1.7;
+}

@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import type { DeepReadonly } from "vue";
 import type { Plot } from "../../../shared/contracts";
 import { items } from "../../../shared/catalog";
 import { growthStage, sceneTrees } from "../lib/scene";
 import { ready } from "../lib/crops";
-defineProps<{ plots: readonly Readonly<Plot>[]; weather: string }>();
+defineProps<{ plots: readonly DeepReadonly<Plot>[]; weather: string }>();
 defineEmits<{ plot: [id: number] }>();
 </script>
 <template>

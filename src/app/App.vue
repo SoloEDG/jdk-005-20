@@ -38,7 +38,7 @@ function reset() {
         <div>
           <span class="eyebrow">A LITTLE PLACE TO GROW</span>
           <h1>把日子，种进田里。</h1>
-          <p>照料作物、手作好物，让每一次收获都有回响。</p>
+          <p>照料作物、手作好物，每一份品质都有可核验的来路。</p>
         </div>
         <EconomyPanel
           :coins="orders.state.coins"
@@ -69,10 +69,12 @@ function reset() {
             :plots="fields.state.plots"
             :selected="fields.state.selected"
             :active="active"
+            :hour="clock.state.hour"
             @select="fields.select"
             @plant="(id) => fields.plant(id, clock.state.hour)"
-            @water="fields.water"
-            @harvest="fields.harvest"
+            @water="(id) => fields.water(id, clock.state.hour)"
+            @certify="(id, step) => fields.certify(id, step, clock.state.hour)"
+            @harvest="(id) => fields.harvest(id, clock.state.hour)"
           />
           <section class="activity">
             <span>农场手记</span>
@@ -103,6 +105,7 @@ function reset() {
           <WarehousePanel
             v-if="tab === 'warehouse'"
             :batches="warehouse.state.batches"
+            :credentials="warehouse.state.credentials"
             :hour="clock.state.hour"
             :free="warehouse.free"
             :wasted="warehouse.state.wasted"
@@ -117,14 +120,17 @@ function reset() {
             v-if="tab === 'orders'"
             :orders="orders.state.orders"
             :hour="clock.state.hour"
+            :report="orders.report"
+            :events="orders.state.events"
             @reserve="orders.reserve"
-            @deliver="(id) => orders.deliver(id, clock.state.hour)"
+            @deliver="orders.deliver"
             @cancel="orders.cancel"
           />
           <div class="tip-card">
             <span>✦ 今日小贴士</span>
             <p>
-              雨天不用浇水，可以留些时间给工坊。<br />蓝莓能连续收获三次，记得照顾它。
+              认证照料要在合法窗口内单独确认，普通浇水不能替代。<br />工坊只在
+              06:00 / 18:00 开班，全部合格输入才会保留成品认证。
             </p>
             <small>跟着季节的节奏，慢慢来就好。</small>
           </div>

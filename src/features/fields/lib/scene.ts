@@ -1,6 +1,7 @@
+import type { DeepReadonly } from "vue";
 import type { Plot } from "../../../shared/contracts";
 import { crops } from "./crops";
-export function growthStage(plot: Readonly<Plot>) {
+export function growthStage(plot: DeepReadonly<Plot>) {
   if (!plot.crop) return 0;
   return Math.min(
     3,

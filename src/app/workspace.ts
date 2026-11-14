@@ -7,14 +7,29 @@ import { createOrders, salePrice } from "../features/orders";
 import { items } from "../shared/catalog";
 import { saveFarm, loadFarm } from "./persistence";
 export function createWorkspace() {
-  const notices = ref<string[]>(["欢迎回到青禾农场。先备一份胡萝卜订单吧。"]);
+  const notices = ref<string[]>([
+    "欢迎回到青禾农场。订单现在要求可核验的认证记录。",
+  ]);
   const notice = (message: string) => {
     notices.value = [message, ...notices.value].slice(0, 12);
   };
   const clock = createClock();
   const warehouse = createWarehouse(() => clock.state.hour, notice);
-  const orders = createOrders(warehouse, notice, clock.state.hour);
-  const fields = createFields(orders.spend, warehouse.add, notice);
+  const orders = createOrders(
+    {
+      ...warehouse,
+      eligible: (id: string, category: string, hour: number) =>
+        warehouse.eligible(id, category, hour),
+    },
+    notice,
+    () => clock.state.hour,
+  );
+  const fields = createFields(
+    orders.spend,
+    (item, n, q, hour, credential) =>
+      warehouse.add(item, n, q, hour, "田间收获", credential),
+    notice,
+  );
   const workshop = createWorkshop(
     { ...warehouse, spend: orders.spend },
     notice,
@@ -71,7 +86,7 @@ export function createWorkspace() {
         fields.restore(data.fields);
         workshop.restore(data.workshop);
         orders.restore(data.orders);
-        notice("已恢复保存时刻");
+        notice("已恢复保存时刻；补做照料不会被追认");
       } catch {
         notice("存档损坏，无法恢复");
       }

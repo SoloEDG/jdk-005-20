@@ -1,3 +1,4 @@
+import type { DeepReadonly } from "vue";
 import type { Item, Weather, Crop } from "../../../shared/contracts";
 export const crops: Partial<
   Record<
@@ -9,7 +10,7 @@ export const crops: Partial<
   corn: { cost: 9, duration: 18, yield: 4, repeat: 1 },
   berry: { cost: 12, duration: 24, yield: 3, repeat: 2 },
 };
-export function grow(crop: Crop, weather: Weather, hours: number) {
+export function grow(crop: Crop, weather: Weather, hours: number): Crop {
   const water = Math.max(
     0,
     Math.min(100, crop.water + (weather === "rain" ? 15 : -8) * hours),
@@ -22,6 +23,6 @@ export function grow(crop: Crop, weather: Weather, hours: number) {
     growth: crop.growth + hours * rate,
   };
 }
-export function ready(crop: Crop) {
+export function ready(crop: DeepReadonly<Crop>) {
   return crop.growth >= (crops[crop.item]?.duration ?? Infinity);
 }
